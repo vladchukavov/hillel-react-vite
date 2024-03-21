@@ -1,12 +1,30 @@
 import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './components/App.jsx'
+import ReactDOM from 'react-dom'
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import './assets/css/index.css'
+import Home from './routes/Home.jsx'
+import UserPosts from './routes/UserPosts.jsx'
+import UserInfo from "./routes/UserPosts.jsx";
 
-fetch(`https://jsonplaceholder.typicode.com/users`)
+const router = createBrowserRouter([
+    {
+        path: '/',
+        element: <Home />,
+        children: [
+            {
+                path: '/user/:userId',
+                element: <UserInfo />,
+            },
+            {
+                path: '/UserPosts/:userId',
+                element: <UserPosts />,
+            }
+        ]
+    }
+]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
+    <React.StrictMode>
+        <RouterProvider router={router} />
+    </React.StrictMode>,
+);
